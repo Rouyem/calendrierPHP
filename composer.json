@@ -1,0 +1,16 @@
+{
+    "name": "rouye/calendrier-php",
+    "autoload": {
+        "psr-4": {
+            "Date\\": "src/Date"
+        }
+    },
+    "authors": [
+        {
+            "name": "emilie",
+            "email": "rouyemilie82@gmail.com"
+        }
+    ],
+    
+    "require": {}
+}

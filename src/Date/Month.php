@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Date;
+namespace Date;
 
 use FFI\Exception;
 

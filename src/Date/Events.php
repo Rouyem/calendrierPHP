@@ -56,9 +56,17 @@ class Events
      * Récupère un évènement
      *
      * @param [type] $id
-     * @return void
+     * @return Event
      */
     public function find($id)
     {
+        require '../src/Date/Event.php';
+        $statement = $this->pdo->query("SELECT * FROM evenements WHERE id = $id LIMIT 1");
+        $statement->setFetchMode(PDO::FETCH_CLASS, Event::class);
+        $result = $statement->fetch();
+        if ($result === false) {
+            throw new \Exception('Aucun résultat n\'a été trouvé');
+        }
+        return $result;
     }
 }

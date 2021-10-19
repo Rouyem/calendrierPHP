@@ -1,13 +1,17 @@
 <?php
 require '../src/bootstrap.php';
-require '../src/Date/Month.php';
-require '../src/Date/Events.php';
+
+use Date\{
+    Events,
+    Month
+};
+
 $pdo = get_pdo();
-$events = new Date\Events($pdo);
+$events = new Events($pdo);
 try {
-    $month = new \App\Date\Month($_GET['month'] ?? null, $_GET['year'] ?? null);
+    $month = new Month($_GET['month'] ?? null, $_GET['year'] ?? null);
 } catch (\Exception $e) {
-    $month = new \App\Date\Month();
+    $month = new Month();
 }
 $start = $month->getStartingDay();
 $start = $start->format('N') === '1' ? $start : $month->getStartingDay()->modify('last monday');
@@ -37,7 +41,7 @@ require '../views/header.php';
                     <div class="calendar__day"><?= $date->format('d'); ?></div>
                     <?php foreach ($eventsForDay as $event) : ?>
                         <div class="calendar__event">
-                            <?= (new DateTime($event['start']))->format('H:i'); ?> - <a href="/event.php?id=<? $event['id']; ?>"><?= $event['name']; ?></a>
+                            <?= (new DateTime($event['start']))->format('H:i'); ?> - <a href="/event.php?id=<?= $event['id']; ?>"><?= $event['name']; ?></a>
 
                         </div>
                     <?php endforeach; ?>
