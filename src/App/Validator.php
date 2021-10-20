@@ -7,6 +7,11 @@ class Validator
     private $data;
     protected $errors = [];
 
+    public function __construcy($data = [])
+    {
+        $this->data = $data;
+    }
+
     /**
      * Undocumented function
      *
@@ -17,6 +22,7 @@ class Validator
     {
         $this->errors = [];
         $this->data = $data;
+        return $this->errors;
     }
 
     public function validate($field, $method, ...$parameters)
@@ -24,15 +30,16 @@ class Validator
         //si le champ n'est pas défini
         if (!isset($this->data[$field])) {
             $this->errors[$field] = "Le champs $field n'est pas rempli";
+            return false;
         } else {
-            call_user_func([$this, $method], $field, ...$parameters);
+            return call_user_func([$this, $method], $field, ...$parameters);
         }
     }
 
     public function minLenght($field, $length)
     {
         //compte le nombre de caractère
-        if (mb_strlen($field) < $length) {
+        if (mb_strlen($this->data[$field]) < $length) {
             $this->errors[$field] = "Le champs doit avoir plus de $length caractères";
             return false;
         }

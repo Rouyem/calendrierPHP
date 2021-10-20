@@ -34,4 +34,24 @@ class Event
     {
         return new \DateTime($this->end);
     }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    public function setStart($start)
+    {
+        $this->start = $start;
+    }
+
+    public function setEnd($end)
+    {
+        $this->end = $end;
+    }
 }

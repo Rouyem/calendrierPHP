@@ -15,6 +15,10 @@
     height: 20%;
 }
 
+td.is-today {
+    background-color: #f3f3f3;
+}
+
 .calendar__table--6weeks td {
     height: 16.66%;
 }
