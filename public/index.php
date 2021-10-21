@@ -8,15 +8,16 @@ use Date\{
 
 $pdo = get_pdo();
 $events = new Events($pdo);
-try {
+$month = new Date\Month($_GET['month'] ?? null, $_GET['year'] ?? null);
+/*try {
     $month = new Month($_GET['month'] ?? null, $_GET['year'] ?? null);
 } catch (\Exception $e) {
     $month = new Month();
-}
+}*/
 $start = $month->getStartingDay();
 $start = $start->format('N') === '1' ? $start : $month->getStartingDay()->modify('last monday');
 $weeks = $month->getWeeks();
-$end = (clone $start)->modify('+' . (6 + 7 * ($weeks - 1)) . 'days');
+$end = $start->modify('+' . (6 + 7 * ($weeks - 1)) . 'days');
 $events = $events->getEventsBetweenByDay($start, $end);
 require '../views/header.php';
 ?>
@@ -42,7 +43,7 @@ require '../views/header.php';
         <?php for ($i = 0; $i < $weeks; $i++) : ?>
             <tr>
                 <?php foreach ($month->days as $k => $day) :
-                    $date = (clone $start)->modify("+" . ($k + $i * 7) . "days");
+                    $date = $start->modify("+" . ($k + $i * 7) . "days");
                     $eventsForDay = $events[$date->format('Y-m-d')] ?? [];
                     $isToday = date('Y-m-d') === $date->format('Y-m-d'); ?>
                     <td class="<?= $month->withinMonth($date) ? '' : 'calendar__othermonth'; ?><?= $isToday ? 'is-today' : ''; ?>">
